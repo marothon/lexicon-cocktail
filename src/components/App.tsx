@@ -1,9 +1,24 @@
-import '../css/App.css'
+import { LandingPage } from "../pages/LandingPage.tsx";
+import { Link, Outlet } from "react-router-dom";
 
-function App() {
+
+export function App() {
   return (
-    <h1>Hello world!</h1>
+    <>
+      <header>
+        <Link to={"home"}>Home</Link>
+        <Link to={"search"}>Search</Link>
+      </header>
+
+      <main>
+        <Outlet />
+      </main>
+
+      <footer>
+        Robo Surfers
+      </footer>
+    </>
   )
 }
 
-export default App
+export default App;
