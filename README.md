@@ -1,5 +1,7 @@
 # Cocktail-Wiki
 
+[Figma](https://www.figma.com/design/cXn9pcYsVhVkELDtQmgC1z/Cocktail-React?node-id=0-1&node-type=CANVAS&t=5q0b4tDt2oF3Qgth-0)
+
 <details>
   <summary>Innehållsförteckning</summary>
 
