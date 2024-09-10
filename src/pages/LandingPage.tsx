@@ -16,24 +16,29 @@ export function LandingPage() : ReactElement {
 
     return (
     <>
-        <section id="randomCocktailContainer">
+        <section id="randomCocktailCard">
              {/* Tar som exempel 
                 https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
              */}
-            <figure id="randomCocktailContainer-leftSide">
+            <figure id="randomCocktailCard-leftSide">
                 <img src={drink?.drinkThumb} />
             </figure>
-
-            <section id="randomCocktailContainer-rightSide">
+                
+            <section id="randomCocktailCard-rightSide">
                 <h1>{drink?.drink}</h1>
 
-                <a>More</a>
+                <section className="moreButtonContainer">
+                    <span className="material-symbols-outlined">
+                        info
+                    </span>
+                    More
+                </section>
 
             </section>
         </section>
         
 
-        <button >Surprise me</button>
+        <button className="surpriseMeButton">Surprise me</button>
     </>
     )
 }
