@@ -1,4 +1,5 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
+import * as CocktailDB from "../data/TheCocktailDB";
 
 
 const margarita = 
@@ -39,6 +40,18 @@ const margarita =
 }
 
 export function LandingPage() : ReactElement {
+
+
+    useEffect(() => {
+        async function getRandom(){
+
+            let drink : CocktailDB.Drink = await CocktailDB.random();
+            
+        }
+
+        getRandom();
+    }, [])
+
     return (
     <>
         <section id="randomCocktailCard">
