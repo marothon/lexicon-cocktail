@@ -1,25 +1,25 @@
 export interface Drink {
-    id: String;
-    drink: String;
-    drinkAlternate: String | null;
-    tags: Array<String> | null;
-    video: String | null;
-    category: String;
-    IBA: String | null;
-    alcoholic: String;
-    glass: String;
-    instructions: String;
-    drinkThumb: String;
+    id: string;
+    drink: string;
+    drinkAlternate: string | null;
+    tags: Array<string> | null;
+    video: string | null;
+    category: string;
+    IBA: string | null;
+    alcoholic: string;
+    glass: string;
+    instructions: string;
+    drinkThumb: string;
     ingredients: Array<Ingredient>;
-    imageSource: String | null;
-    imageAttribution: String | null;
-    creativeCommonsConfirmed: String;
-    dateModified: String;
+    imageSource: string | null;
+    imageAttribution: string | null;
+    creativeCommonsConfirmed: string;
+    dateModified: string;
 }
 
 export interface Ingredient {
-    ingredient: String;
-    measure: String | null;
+    ingredient: string;
+    measure: string | null;
 }
 
 
