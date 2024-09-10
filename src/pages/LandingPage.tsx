@@ -1,6 +1,19 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import * as CocktailDB from "../data/TheCocktailDB.ts";
 
 export function LandingPage() : ReactElement {
+    let [drink, setDrink] = useState<CocktailDB.Drink>();
+    useEffect(()  => {
+        async function getRandom() {
+            let aRandomDrink : CocktailDB.Drink = await CocktailDB.random();
+            setDrink(aRandomDrink);
+        }
+
+        getRandom();
+
+    }, [])
+
+
     return (
     <>
         <section id="randomCocktailContainer">
@@ -8,18 +21,13 @@ export function LandingPage() : ReactElement {
                 https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
              */}
             <figure id="randomCocktailContainer-leftSide">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Klassiche_Margarita.jpg" />
+                <img src={drink?.drinkThumb} />
             </figure>
 
             <section id="randomCocktailContainer-rightSide">
-                
-                <section id="randomCocktailContainer-rightSide-top">
-                    Cocktail name
-                </section>
+                <h1>{drink?.drink}</h1>
 
-                <section id="randomCocktailContainer-rightSide-bottom">
-                    More
-                </section>
+                <a>More</a>
 
             </section>
         </section>

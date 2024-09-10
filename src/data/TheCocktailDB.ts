@@ -29,7 +29,7 @@ export async function random() {
     });
 }
 
-export async function search(query: String) {
+export async function search(query: string) {
     return new Promise<Array<Drink>>((resolve, _) => {
         resolve([DRINK_2, DRINK_3]);
     });
