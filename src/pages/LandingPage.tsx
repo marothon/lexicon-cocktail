@@ -26,10 +26,10 @@ export function LandingPage() : ReactElement {
             </figure>
                 
             <section id="randomCocktailCard-rightSide">
-                <h1>{drink?.drink}</h1>
+                <p>{drink?.drink}</p>
 
-                <Link to={""} className="moreButtonContainer roboto-condensed-400">
-                    <span className="material-symbols-outlined">info</span>
+                <Link to={""} className="moreButtonContainer">
+                    <span className="material-symbols-outlined">info</span> 
                     More
                 </Link>
 
@@ -37,7 +37,7 @@ export function LandingPage() : ReactElement {
         </section>
         
 
-        <Link to={"/"} className="surpriseMeButton roboto-condensed-400">Surprise me</Link>
+        <Link to={"/"} className="surpriseMeButton">Surprise me</Link>
     </>
     )
 }

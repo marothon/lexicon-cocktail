@@ -1,25 +1,52 @@
+import { useState } from "react";
 import { LandingPage } from "../pages/LandingPage.tsx";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 
 export function App() {
-  return (
-    <>
-      <header>
-        <h2 className="roboto-regular">CocktailDB</h2>
-        <Link to={"home"} className="roboto-regular">Home</Link>
-        <Link to={"search"} className="roboto-regular">Search</Link>
-      </header>
 
-      <main>
-        <Outlet />
-      </main>
+    
+    return (
+        <>
+        <header>
+            <h1>CocktailDB</h1>
+            <section className="headerLinks">
 
-      <footer>
-        Robo Surfers
-      </footer>
-    </>
-  )
-}
+                <NavLink 
+                    to="/" 
+                    style={({isActive}) => { 
+                        return {
+                            fontWeight: isActive ? "800" : "",
+                            fontSize: isActive ? "30px" : undefined
+                        };
+                    }}
+                >
+                Home
+                </NavLink>
+
+                <NavLink to="search" style={({isActive}) => { 
+                        return {
+                            fontWeight: isActive ? "800" : "",
+                            fontSize: isActive ? "30px" : undefined
+                        };
+                    }}
+                >
+                Search
+                </NavLink>
+
+            </section>
+            
+        </header>
+
+        <main>
+            <Outlet />
+        </main>
+
+        <footer>
+            <h1>Robo Surfers</h1>
+        </footer>
+        </>
+    )
+    }
 
 export default App;
