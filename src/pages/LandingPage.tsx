@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import * as CocktailDB from "../data/TheCocktailDB.ts";
+import { Link } from "react-router-dom";
 
 export function LandingPage() : ReactElement {
     let [drink, setDrink] = useState<CocktailDB.Drink>();
@@ -27,18 +28,16 @@ export function LandingPage() : ReactElement {
             <section id="randomCocktailCard-rightSide">
                 <h1>{drink?.drink}</h1>
 
-                <section className="moreButtonContainer">
-                    <span className="material-symbols-outlined">
-                        info
-                    </span>
+                <Link to={""} className="moreButtonContainer roboto-condensed-400">
+                    <span className="material-symbols-outlined">info</span>
                     More
-                </section>
+                </Link>
 
             </section>
         </section>
         
 
-        <button className="surpriseMeButton">Surprise me</button>
+        <Link to={"/"} className="surpriseMeButton roboto-condensed-400">Surprise me</Link>
     </>
     )
 }

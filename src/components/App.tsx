@@ -6,8 +6,9 @@ export function App() {
   return (
     <>
       <header>
-        <Link to={"home"}>Home</Link>
-        <Link to={"search"}>Search</Link>
+        <h2 className="roboto-regular">CocktailDB</h2>
+        <Link to={"home"} className="roboto-regular">Home</Link>
+        <Link to={"search"} className="roboto-regular">Search</Link>
       </header>
 
       <main>
