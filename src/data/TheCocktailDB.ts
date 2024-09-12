@@ -1,25 +1,25 @@
 export interface Drink {
-    id: String;
-    drink: String;
-    drinkAlternate: String | null;
-    tags: Array<String> | null;
-    video: String | null;
-    category: String;
-    IBA: String | null;
-    alcoholic: String;
-    glass: String;
-    instructions: String;
-    drinkThumb: String;
+    id: string;
+    drink: string;
+    drinkAlternate: string | null;
+    tags: Array<string> | null;
+    video: string | null;
+    category: string;
+    IBA: string | null;
+    alcoholic: string;
+    glass: string;
+    instructions: string;
+    drinkThumb: string;
     ingredients: Array<Ingredient>;
-    imageSource: String | null;
-    imageAttribution: String | null;
-    creativeCommonsConfirmed: String;
-    dateModified: String;
+    imageSource: string | null;
+    imageAttribution: string | null;
+    creativeCommonsConfirmed: string;
+    dateModified: string;
 }
 
 export interface Ingredient {
-    ingredient: String;
-    measure: String | null;
+    ingredient: string;
+    measure: string | null;
 }
 
 const THE_COCKTAIL_DB_API_BASE_URL: string = "https://www.thecocktaildb.com/api/json/v1/1/";
@@ -50,9 +50,28 @@ export async function random() {
     });
 }
 
-export async function search(query: String) {
-    return new Promise<Array<Drink>>((resolve, _) => {
-        resolve([DRINK_2, DRINK_3]);
+export async function search(query: string) {
+    const ENDPOINT_URI: string = "search.php";
+
+    return new Promise<Array<Drink>>(async (resolve, reject) => {
+        try {
+            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + ENDPOINT_URI +"?s=" + encodeURI(query));
+            if (!response.ok) {
+                console.log("Network response was not ok");
+                reject("Network response was not ok.");
+            }
+            const data = await response.json();
+
+            if (Array.isArray(data.drinks)) {
+                resolve(data.drinks.map(transformToDrink));
+            } else {
+                console.log("No drinks in response", data);
+                reject("Sorry, no drinks for you.");
+            }
+        } catch (error) {
+            console.error("There has been a problem with your fetch operation:", error);
+            reject("There has been a problem with your fetch operation.");
+        }
     });
 }
 
@@ -61,7 +80,7 @@ function transformToDrink(data: any) : Drink {
         id: data.idDrink,
         drink: data.strDrink,
         drinkAlternate: data.strDrinkAlternate,
-        tags: data.strTags,
+        tags: data.strTags?.split(","),
         video: data.strVideo,
         category: data.strCategory,
         IBA: data.strIBA,
