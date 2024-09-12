@@ -1,54 +1,53 @@
 import { NavLink, Outlet } from "react-router-dom";
 
 
-export function App() {
+export default function App() {
 
-    
-    return (
-        <>
-            <header>
-                <h1>CocktailDB</h1>
-                <section className="headerLinks">
 
-                    <NavLink 
-                        to="/" 
-                        className={({ isActive }) =>
-                            [
-                                isActive ? "active" : ""
-                            ].join(" ")
-                        }
-                    >
-                    Home
-                    </NavLink>
+  return (
+    <>
+      <header>
+        <nav>
+          <h1>CocktailDB</h1>
+          <section className="headerLinks">
 
-                    <NavLink 
-                        to="search" 
-                        className={({ isActive }) =>
-                            [
-                                isActive ? "active" : ""
-                            ].join(" ")
-                        }
-                    >
-                    Search
-                    </NavLink>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                [
+                  isActive ? "active" : ""
+                ].join(" ")
+              }
+            >
+              Home
+            </NavLink>
 
-                </section>
+            <NavLink
+              to="search"
+              className={({ isActive }) =>
+                [
+                  isActive ? "active" : ""
+                ].join(" ")
+              }
+            >
+              Search
+            </NavLink>
 
-                <section id="burgerMenu" className="material-symbols-outlined">
-                    menu
-                </section>
-                
-            </header>
+          </section>
 
-            <main>
-                <Outlet />
-            </main>
+          <section id="burgerMenu" className="material-symbols-outlined">
+            menu
+          </section>
+        </nav>
+      </header>
 
-            <footer>
-                <h1>Robo Surfers</h1>
-            </footer>
-        </>
-    )
-    }
+      <main>
+        <Outlet />
+      </main>
 
-export default App;
+      <footer>
+        <h1>Robo Surfers</h1>
+      </footer>
+    </>
+  )
+}
