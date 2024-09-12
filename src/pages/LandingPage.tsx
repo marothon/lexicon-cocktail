@@ -34,11 +34,10 @@ export default function LandingPage(): ReactElement {
           
           <Link to={`cocktail/${drink?.id}`} className="moreButtonContainer">
             <span className="material-symbols-outlined">info</span>
-            More
+            More            
           </Link>
         </section>
       </section>
-
 
       <Link to={"/"} onClick={getRandom} className="surpriseMeButton">Surprise me</Link>
     </>
