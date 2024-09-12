@@ -12,22 +12,22 @@ export function App() {
 
                 <NavLink 
                     to="/" 
-                    style={({isActive}) => { 
-                        return {
-                            fontWeight: isActive ? "800" : "",
-                            fontSize: isActive ? "30px" : undefined
-                        };
-                    }}
+                    className={({ isActive }) =>
+                        [
+                            isActive ? "active" : ""
+                        ].join(" ")
+                    }
                 >
                 Home
                 </NavLink>
 
-                <NavLink to="search" style={({isActive}) => { 
-                        return {
-                            fontWeight: isActive ? "800" : "",
-                            fontSize: isActive ? "30px" : undefined
-                        };
-                    }}
+                <NavLink 
+                    to="search" 
+                    className={({ isActive }) =>
+                        [
+                            isActive ? "active" : ""
+                        ].join(" ")
+                    }
                 >
                 Search
                 </NavLink>

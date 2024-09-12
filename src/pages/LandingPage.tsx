@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import * as CocktailDB from "../data/TheCocktailDB.ts";
 import { Link } from "react-router-dom";
 
+
 export function LandingPage() : ReactElement {
     let [drink, setDrink] = useState<CocktailDB.Drink>();
     useEffect(()  => {
@@ -11,6 +12,8 @@ export function LandingPage() : ReactElement {
         }
 
         getRandom();
+
+        
 
     }, [])
 
