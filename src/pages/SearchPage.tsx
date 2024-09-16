@@ -1,7 +1,7 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
-import CocktailPaginator from '../components/CocktailPaginator';
+import Paginator from '../components/Paginator';
 import CocktailCardList from '../components/CocktailCardList';
 
 export default function SearchPage() {
@@ -58,7 +58,7 @@ export default function SearchPage() {
       </form>
       { // Only show paginator if we have a search result to show
         searchResult.current ? 
-        <CocktailPaginator
+        <Paginator
           pageCount={pageCount}
           pageParams={new URLSearchParams({'q': searchedTerm})}
           handlePagination={handlePagination}

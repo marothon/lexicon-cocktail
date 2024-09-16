@@ -7,7 +7,7 @@ interface PaginatorProps{
   handlePagination: (page: number) => void;
 }
 
-export default function CocktailPaginator({pageParams, pageCount, handlePagination}: PaginatorProps) {
+export default function Paginator({pageParams, pageCount, handlePagination}: PaginatorProps) {
   const [searchParams, _] = useSearchParams();
   const [page, setPage] = useState<number>(parseInt(searchParams.get('p') as string) ?? 1);
   
