@@ -2,7 +2,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
 import CocktailPaginator from '../components/CocktailPaginator';
-import CocktailSearchResultCard from '../components/CocktailSearchResultCard';
+import CocktailCard from '../components/CocktailCard';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
@@ -70,7 +70,7 @@ export default function SearchPage() {
         {
           displayedSearchResult?.map((drink) => {
             return (
-             <CocktailSearchResultCard key={drink.id as string} drink={drink} />
+             <CocktailCard key={drink.id as string} drink={drink} />
             )
           })
         }
