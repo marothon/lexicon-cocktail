@@ -6,7 +6,7 @@ import CocktailCardList from '../components/CocktailCardList';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
-  const [pagedSearchResult, setDisplayedSearchResult] = useState<CocktailDB.Drink[]>();
+  const [pagedSearchResult, setPagedSearchResult] = useState<CocktailDB.Drink[]>();
   const searchResult = useRef<CocktailDB.Drink[]>();
   const [pageCount, setPageCount] = useState<number>(1);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function SearchPage() {
 
   const displaySearchResult = (result: CocktailDB.Drink[], page: number) => {
     setPageCount(Math.ceil(result.length/10));
-    setDisplayedSearchResult(result.slice( (page-1)*10, page*10));
+    setPagedSearchResult(result.slice( (page-1)*10, page*10));
   }
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -33,7 +33,7 @@ export default function SearchPage() {
       performSearch(searchTerm);
     } else {
       navigate('');
-      setDisplayedSearchResult([]);
+      setPagedSearchResult([]);
       setPageCount(1);
       searchResult.current = undefined;
     }
