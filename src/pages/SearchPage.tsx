@@ -1,7 +1,7 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
-import CocktailSearchPaginator from '../components/CocktailSearchPaginator';
+import CocktailPaginator from '../components/CocktailPaginator';
 import CocktailSearchResultCard from '../components/CocktailSearchResultCard';
 
 export default function SearchPage() {
@@ -29,7 +29,7 @@ export default function SearchPage() {
     const searchTerm: string = formData.get('searchTerm') as string;
 
     if(searchTerm){
-      navigate(`?q=${searchTerm}&p=1`);
+      navigate(`?p=1&q=${searchTerm}`);
       performSearch(searchTerm);
     } else {
       navigate('');
@@ -58,9 +58,9 @@ export default function SearchPage() {
       </form>
       { // Only show paginator if we have a search result to show
         searchResult.current ? 
-        <CocktailSearchPaginator
+        <CocktailPaginator
           pageCount={pageCount}
-          searchedTerm={searchedTerm}
+          pageParams={new URLSearchParams({'q': searchedTerm})}
           handlePagination={handlePagination}
         />
         :
