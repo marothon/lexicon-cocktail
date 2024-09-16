@@ -1,12 +1,12 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
-import CocktailSearchPaginator from '../components/CocktailSearchPaginator';
-import CocktailSearchResultCard from '../components/CocktailSearchResultCard';
+import Paginator from '../components/Paginator';
+import CocktailCardList from '../components/CocktailCardList';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
-  const [displayedSearchResult, setDisplayedSearchResult] = useState<CocktailDB.Drink[]>();
+  const [pagedSearchResult, setPagedSearchResult] = useState<CocktailDB.Drink[]>();
   const searchResult = useRef<CocktailDB.Drink[]>();
   const [pageCount, setPageCount] = useState<number>(1);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function SearchPage() {
 
   const displaySearchResult = (result: CocktailDB.Drink[], page: number) => {
     setPageCount(Math.ceil(result.length/10));
-    setDisplayedSearchResult(result.slice( (page-1)*10, page*10));
+    setPagedSearchResult(result.slice( (page-1)*10, page*10));
   }
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -29,11 +29,11 @@ export default function SearchPage() {
     const searchTerm: string = formData.get('searchTerm') as string;
 
     if(searchTerm){
-      navigate(`?q=${searchTerm}&p=1`);
+      navigate(`?p=1&q=${searchTerm}`);
       performSearch(searchTerm);
     } else {
       navigate('');
-      setDisplayedSearchResult([]);
+      setPagedSearchResult([]);
       setPageCount(1);
       searchResult.current = undefined;
     }
@@ -58,23 +58,20 @@ export default function SearchPage() {
       </form>
       { // Only show paginator if we have a search result to show
         searchResult.current ? 
-        <CocktailSearchPaginator
+        <Paginator
           pageCount={pageCount}
-          searchedTerm={searchedTerm}
+          pageParams={new URLSearchParams({'q': searchedTerm})}
           handlePagination={handlePagination}
         />
         :
         null
       }
-      <div className='search-result-list'>
-        {
-          displayedSearchResult?.map((drink) => {
-            return (
-             <CocktailSearchResultCard key={drink.id as string} drink={drink} />
-            )
-          })
-        }
-      </div>
+      {
+        pagedSearchResult ?
+          <CocktailCardList cocktails={pagedSearchResult} />
+          :
+          null
+      }
     </div>
   )
 }

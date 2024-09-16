@@ -1,0 +1,42 @@
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  & span.current-page{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  & a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    background-color: rgba(255, 255, 255, 1);
+
+    &:visited {
+      color: black;
+    }
+
+    &.next-page, &.previous-page {
+      font-size: 3rem;
+      cursor: pointer;
+      border-radius: 15%;
+
+      &.disabled{
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      &:hover {
+        transform: none;
+      }
+
+      &:hover:not(.disabled){
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+}

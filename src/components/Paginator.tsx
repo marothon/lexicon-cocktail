@@ -2,12 +2,12 @@ import { MouseEventHandler, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom';
 
 interface PaginatorProps{
-  pageCount: number,
-  searchedTerm: string,
-  handlePagination: (page: number) => void
+  pageParams?: URLSearchParams;
+  pageCount: number;
+  handlePagination: (page: number) => void;
 }
 
-export default function CocktailSearchPaginator({searchedTerm, pageCount, handlePagination}: PaginatorProps) {
+export default function Paginator({pageParams, pageCount, handlePagination}: PaginatorProps) {
   const [searchParams, _] = useSearchParams();
   const [page, setPage] = useState<number>(parseInt(searchParams.get('p') as string) ?? 1);
   
@@ -24,18 +24,18 @@ export default function CocktailSearchPaginator({searchedTerm, pageCount, handle
   }
 
   return (
-    <div className='search-result-pager'>
+    <div className='pager'>
       <Link 
         className={`${page < 2 ? 'disabled' : ''} previous-page material-symbols-outlined`} 
         onClick={onClickHandler(-1)} 
-        to={`?q=${searchedTerm}&p=${page-1}`}>
+        to={`?p=${page-1}${pageParams ? '&'+pageParams.toString() : ''}`}>
           chevron_left
       </Link> 
       <span className='current-page'>{page}/{pageCount}</span>
       <Link
         className={`${page >= pageCount ? 'disabled' : ''} next-page material-symbols-outlined`}
         onClick={onClickHandler(1)}
-        to={`?q=${searchedTerm}&p=${page+1}`}>
+        to={`?p=${page+1}${pageParams ? '&'+pageParams.toString() : ''}`}>
           chevron_right
       </Link>
     </div>
