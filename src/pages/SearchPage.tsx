@@ -2,6 +2,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
 import CocktailSearchPaginator from '../components/CocktailSearchPaginator';
+import CocktailSearchResultCard from '../components/CocktailSearchResultCard';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
@@ -38,6 +39,10 @@ export default function SearchPage() {
     }
   }
 
+  const handlePagination = (page: number) => {
+    displaySearchResult(searchResult.current??[], page);
+  };
+
   useEffect(() => {
     const searchTerm: string = searchParams.get('q') as string;
 
@@ -45,10 +50,6 @@ export default function SearchPage() {
       performSearch(searchTerm);
     }
   }, []);
-
-  const handlePagination = (page: number) => {
-    displaySearchResult(searchResult.current??[], page);
-  };
 
   return (
     <div className='search-page'>
@@ -69,13 +70,7 @@ export default function SearchPage() {
         {
           displayedSearchResult?.map((drink) => {
             return (
-              <article key={drink.id as string} className='search-result-drink'>
-                <img src={drink.drinkThumb as string}/>
-                <span className="info-icon material-symbols-outlined">info</span>
-                <div className="info-container">
-                  <h4>{drink.drink}</h4>  
-                </div>
-              </article>
+             <CocktailSearchResultCard key={drink.id as string} drink={drink} />
             )
           })
         }
