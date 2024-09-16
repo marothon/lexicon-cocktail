@@ -16,7 +16,8 @@ const defaultGlobalContext: GlobalState = {
   favorites: [],
   toggleFavorite: () => {}
 }
-const GlobalStateContext = createContext<GlobalState>(defaultGlobalContext);
+
+export const GlobalStateContext = createContext<GlobalState>(defaultGlobalContext);
 
 export function GlobalStateProvider ( {children}: {children: ReactNode}) {
   const [favorites, setFavorites] = useState<Map<string, DrinkFavorite>>(new Map<string, DrinkFavorite>());
