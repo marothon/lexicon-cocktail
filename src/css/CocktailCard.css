@@ -1,7 +1,6 @@
 .cocktail-card {
   display: grid;
   width: 11rem;
-  cursor: pointer;
   border-radius: 2rem;
 
   & > * {
@@ -11,9 +10,16 @@
 
   & .info-icon {
     z-index: 1;
-    font-size: 3rem;
     margin: 0.5rem 0.5rem auto auto;
-    text-shadow: 0 2px 3px #000000;
+
+    & span {
+      font-size: 3rem;
+      text-shadow: 0 2px 3px #000000;
+
+      &:hover {
+        color: rgb(222, 222, 222);
+      }
+    }
   }
 
   & .favorite-button-container {
@@ -52,12 +58,5 @@
     aspect-ratio: 1 / 1;
     z-index: 0;
     box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.8);
-  }
-
-  &:hover{
-    background-color: white;
-    & img {
-      opacity: 0.8;
-    }
   }
 }

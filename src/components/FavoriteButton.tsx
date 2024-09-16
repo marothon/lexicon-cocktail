@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { GlobalStateContext } from '../context/GlobalStateContext'
-import { Drink } from '../data/TheCocktailDB';
+import { Drink } from '../data/Drink';
 
 export default function FavoriteButton({drink}: {drink: Drink}) {
   const { toggleFavorite, isFavorite } = useContext(GlobalStateContext);
