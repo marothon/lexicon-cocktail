@@ -1,53 +1,15 @@
-import { NavLink, Outlet } from "react-router-dom";
-
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 export default function App() {
-
-
   return (
     <>
-      <header>
-        <nav>
-          <h1>CocktailDB</h1>
-          <section className="headerLinks">
-
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                [
-                  isActive ? "active" : ""
-                ].join(" ")
-              }
-            >
-              Home
-            </NavLink>
-
-            <NavLink
-              to="search"
-              className={({ isActive }) =>
-                [
-                  isActive ? "active" : ""
-                ].join(" ")
-              }
-            >
-              Search
-            </NavLink>
-
-          </section>
-
-          <section id="burgerMenu" className="material-symbols-outlined">
-            menu
-          </section>
-        </nav>
-      </header>
-
+      <Header />
       <main>
         <Outlet />
       </main>
-
-      <footer>
-        <h1>Robo Surfers</h1>
-      </footer>
+      <Footer />
     </>
   )
 }
