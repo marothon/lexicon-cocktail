@@ -2,11 +2,11 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
 import CocktailPaginator from '../components/CocktailPaginator';
-import CocktailCard from '../components/CocktailCard';
+import CocktailCardList from '../components/CocktailCardList';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
-  const [displayedSearchResult, setDisplayedSearchResult] = useState<CocktailDB.Drink[]>();
+  const [pagedSearchResult, setDisplayedSearchResult] = useState<CocktailDB.Drink[]>();
   const searchResult = useRef<CocktailDB.Drink[]>();
   const [pageCount, setPageCount] = useState<number>(1);
   const navigate = useNavigate();
@@ -66,15 +66,12 @@ export default function SearchPage() {
         :
         null
       }
-      <div className='search-result-list'>
-        {
-          displayedSearchResult?.map((drink) => {
-            return (
-             <CocktailCard key={drink.id as string} drink={drink} />
-            )
-          })
-        }
-      </div>
+      {
+        pagedSearchResult ?
+          <CocktailCardList cocktails={pagedSearchResult} />
+          :
+          null
+      }
     </div>
   )
 }
