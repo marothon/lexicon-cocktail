@@ -25,70 +25,52 @@ export interface Ingredient {
 const THE_COCKTAIL_DB_API_BASE_URL: string = "https://www.thecocktaildb.com/api/json/v1/1/";
 
 
-export async function random() {
-    const ENDPOINT_URI: string = "random.php";
-
-    return new Promise<Drink>(async (resolve, reject) => {
-        try {
-            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + ENDPOINT_URI);
-            if (!response.ok) {
-                console.log("Network response was not ok");
-                reject("Network response was not ok.");
-            }
-            const data = await response.json();
-
-            if (data.drinks[0]) {
-                resolve(transformToDrink(data.drinks[0]));
-            } else {
-                console.log("No drinks in response", data);
-                reject("Sorry, no drinks for you.");
-            }
-        } catch (error) {
-            console.error("There has been a problem with your fetch operation:", error);
-            reject("There has been a problem with your fetch operation.");
-        }
-    });
+export async function random() : Promise<Drink> {
+    return requestEndpoint<Drink>(
+        "random.php",
+        data => data.drinks[0],
+        data => transformToDrink(data.drinks[0])
+    );
 }
 
-export async function search(query: string) {
-    const ENDPOINT_URI: string = "search.php";
-
-    return new Promise<Array<Drink>>(async (resolve, reject) => {
-        try {
-            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + ENDPOINT_URI +"?s=" + encodeURI(query));
-            if (!response.ok) {
-                console.log("Network response was not ok");
-                reject("Network response was not ok.");
-            }
-            const data = await response.json();
-
-            if (Array.isArray(data.drinks)) {
-                resolve(data.drinks.map(transformToDrink));
-            } else {
-                console.log("No drinks in response", data);
-                reject("Sorry, no drinks for you.");
-            }
-        } catch (error) {
-            console.error("There has been a problem with your fetch operation:", error);
-            reject("There has been a problem with your fetch operation.");
-        }
-    });
+export async function search(query: string) : Promise<Array<Drink>> {
+    return requestEndpoint<Array<Drink>>(
+        "search.php",
+        data => Array.isArray(data.drinks),
+        data => data.drinks.map(transformToDrink),
+        [{key: "s", value: query}]
+    );
 }
 
 export async function lookupDrink(id: string) {
-    const ENDPOINT_URI: string = "lookup.php";
+    return requestEndpoint<Drink>(
+        "lookup.php",
+        data => data.drinks[0],
+        data => transformToDrink(data.drinks[0]),
+        [{key: "i", value: id}]
+    );
+}
 
-    return new Promise<Drink>(async (resolve, reject) => {
+async function requestEndpoint<T>(endpointUri: string, test: (data: any) => boolean, transform: (data: any) => T,
+    parameters: Array<{key: string, value: string}> = []): Promise<T> {
+    return new Promise<T>(async (resolve, reject) => {
         try {
-            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + ENDPOINT_URI +"?i=" + encodeURI(id));
+            let paramString: string = "";
+            if (parameters.length > 0) {
+                paramString = "?" + parameters.map(
+                        (parameter) => encodeURI(parameter.key) + "=" + encodeURI(parameter.value)
+                    ).join();
+            }
+
+            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + endpointUri + paramString);
             if (!response.ok) {
                 console.log("Network response was not ok");
                 reject("Network response was not ok.");
             }
             const data = await response.json();
 
-            if (data.drinks[0]) {
-                resolve(transformToDrink(data.drinks[0]));
+            if (test(data)) {
+                resolve(transform(data));
             } else {
                 console.log("No drinks in response", data);
                 reject("Sorry, no drinks for you.");
