@@ -4,7 +4,6 @@
   cursor: pointer;
   border-radius: 2rem;
 
-
   & > * {
     grid-row: 1;
     grid-column: 1;
@@ -14,6 +13,14 @@
     z-index: 1;
     font-size: 3rem;
     margin: 0.5rem 0.5rem auto auto;
+    text-shadow: 0 2px 3px #000000;
+  }
+
+  & .favorite-button-container {
+    font-size: 3rem;
+    z-index: 1;
+    margin: 0.5rem auto auto 0.5rem;
+
     text-shadow: 0 2px 3px #000000;
   }
 

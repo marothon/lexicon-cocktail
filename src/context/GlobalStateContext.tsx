@@ -9,12 +9,14 @@ interface DrinkFavorite {
 
 interface GlobalState {
   favorites: DrinkFavorite[];
-  toggleFavorite: (id: CocktailDB.Drink) => void; 
+  toggleFavorite: (drink: CocktailDB.Drink) => boolean;
+  isFavorite: (drink: CocktailDB.Drink) => boolean;
 }
 
 const defaultGlobalContext: GlobalState = {
   favorites: [],
-  toggleFavorite: () => {}
+  toggleFavorite: () => false,
+  isFavorite: () => false
 }
 
 export const GlobalStateContext = createContext<GlobalState>(defaultGlobalContext);
@@ -27,20 +29,26 @@ export function GlobalStateProvider ( {children}: {children: ReactNode}) {
       setFavorites((oldFavorites) => {
         oldFavorites.delete(drink.id);
         return structuredClone(oldFavorites);
-      })
-      
+      });
+      return false;
     }
     else{
       setFavorites((oldFavorites) => {
         oldFavorites.set(drink.id, {id: drink.id, drink: drink.drink, drinkThumb: drink.drinkThumb});
         return structuredClone(oldFavorites);
-      })
+      });
+      return true;
     }
+  }
+
+  function isFavorite(drink: CocktailDB.Drink){
+    return favorites.has(drink.id);
   }
 
   let data: GlobalState = {
     favorites: Array.from(favorites.values()),
-    toggleFavorite: toggleFavorite
+    toggleFavorite: toggleFavorite,
+    isFavorite: isFavorite
   };
 
   return (
