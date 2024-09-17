@@ -1,3 +1,5 @@
+import { Ingredient } from "./Ingredient";
+
 export interface Drink {
     id: string;
     drink: string;
@@ -10,14 +12,14 @@ export interface Drink {
     glass: string;
     instructions: string;
     drinkThumb: string;
-    ingredients: Array<Ingredient>;
+    ingredients: Array<DrinkIngredient>;
     imageSource: string | null;
     imageAttribution: string | null;
     creativeCommonsConfirmed: string;
     dateModified: string;
 }
 
-export interface Ingredient {
+export interface DrinkIngredient {
     ingredient: string;
     measure: string | null;
 }
@@ -42,12 +44,30 @@ export async function search(query: string) : Promise<Array<Drink>> {
     );
 }
 
-export async function lookupDrink(id: string) {
+export async function searchIngredient(query: string) : Promise<Ingredient> {
+    return requestEndpoint<Ingredient>(
+        "search.php",
+        data => data.ingredients[0],
+        data => transformToIngredient(data.ingredients[0]),
+        [{key: "i", value: query}]
+    );
+}
+
+export async function lookupDrink(id: string) : Promise<Drink> {
     return requestEndpoint<Drink>(
         "lookup.php",
         data => data.drinks[0],
         data => transformToDrink(data.drinks[0]),
         [{key: "i", value: id}]
+    );
+}
+
+export async function lookupIngredient(id: string) : Promise<Ingredient> {
+    return requestEndpoint<Ingredient>(
+        "lookup.php",
+        data => data.ingredients[0],
+        data => transformToIngredient(data.ingredients[0]),
+        [{key: "iid", value: id}]
     );
 }
 
@@ -95,7 +115,7 @@ function transformToDrink(data: any) : Drink {
         glass: data.strGlass,
         instructions: data.strInstructions,
         drinkThumb: data.strDrinkThumb,
-        ingredients: transformToIngredients(data),
+        ingredients: transformToDrinkIngredients(data),
         imageSource: data.strImageSource,
         imageAttribution: data.strImageAttribution,
         creativeCommonsConfirmed: data.strCreativeCommonsConfirmed,
@@ -103,8 +123,8 @@ function transformToDrink(data: any) : Drink {
     };
 }
 
-function transformToIngredients(data: any) : Array<Ingredient> {
-    let ingredients: Array<Ingredient> = [];
+function transformToDrinkIngredients(data: any) : Array<DrinkIngredient> {
+    let ingredients: Array<DrinkIngredient> = [];
 
     for (let i = 1; i <= 15; i++) {
         let strIngredientX = "strIngredient" + i;
@@ -120,4 +140,15 @@ function transformToIngredients(data: any) : Array<Ingredient> {
     }
 
     return ingredients;
+}
+
+function transformToIngredient(data: any) : Ingredient {
+    return {
+        id: data.idIngredient,
+        ingredient: data.strIngredient,
+        description: data.strDescription,
+        type: data.strType,
+        alcohol: data.strAlcohol,
+        ABV: data.strABV
+    };
 }
