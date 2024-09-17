@@ -27,6 +27,18 @@ export default function Header() {
             >
               Search
             </NavLink>
+
+            <NavLink
+              to="favorites"
+              className={({ isActive }) =>
+                [
+                  isActive ? "active" : ""
+                ].join(" ")
+              }
+            >
+              Favorites
+            </NavLink>
+
           </section>
           <section id="burgerMenu" className="material-symbols-outlined">
             menu
