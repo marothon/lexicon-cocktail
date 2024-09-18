@@ -1,5 +1,5 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
 import Paginator from '../components/Paginator';
 import CocktailCardList from '../components/CocktailCardList';
@@ -7,6 +7,7 @@ import { Drink } from '../data/Drink';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
+  const location = useLocation();
   const [pagedSearchResult, setPagedSearchResult] = useState<Drink[]>();
   const searchResult = useRef<Drink[]>();
   const [pageCount, setPageCount] = useState<number>(1);
@@ -50,7 +51,7 @@ export default function SearchPage() {
     if(searchTerm){
       performSearch(searchTerm);
     }
-  }, []);
+  }, [location]);
 
   return (
     <div className='search-page'>
