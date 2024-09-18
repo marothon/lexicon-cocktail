@@ -3,11 +3,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as CocktailDB from '../data/TheCocktailDB';
 import Paginator from '../components/Paginator';
 import CocktailCardList from '../components/CocktailCardList';
+import { Drink } from '../data/Drink';
 
 export default function SearchPage() {
   const [searchParams, _] = useSearchParams();
-  const [pagedSearchResult, setPagedSearchResult] = useState<CocktailDB.Drink[]>();
-  const searchResult = useRef<CocktailDB.Drink[]>();
+  const [pagedSearchResult, setPagedSearchResult] = useState<Drink[]>();
+  const searchResult = useRef<Drink[]>();
   const [pageCount, setPageCount] = useState<number>(1);
   const navigate = useNavigate();
   const [searchedTerm, setSearchedTerm] = useState<string>(searchParams.get('p')??'');
@@ -18,7 +19,7 @@ export default function SearchPage() {
     displaySearchResult(searchResult.current, parseInt(searchParams.get('p') ?? '1'));
   };
 
-  const displaySearchResult = (result: CocktailDB.Drink[], page: number) => {
+  const displaySearchResult = (result: Drink[], page: number) => {
     setPageCount(Math.ceil(result.length/10));
     setPagedSearchResult(result.slice( (page-1)*10, page*10));
   }
@@ -57,7 +58,7 @@ export default function SearchPage() {
         <input id='searchTerm' placeholder='Search by drink name' name='searchTerm' type="text" defaultValue={searchParams.get('q') ?? ''}/>
       </form>
       { // Only show paginator if we have a search result to show
-        searchResult.current ? 
+        searchResult.current ?
         <Paginator
           pageCount={pageCount}
           pageParams={new URLSearchParams({'q': searchedTerm})}

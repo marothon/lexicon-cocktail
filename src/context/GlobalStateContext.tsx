@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import * as CocktailDB from "../data/TheCocktailDB";
+import { Drink } from "../data/Drink";
 
 interface DrinkFavorite {
   id: string;
@@ -9,8 +9,8 @@ interface DrinkFavorite {
 
 interface GlobalState {
   favorites: DrinkFavorite[];
-  toggleFavorite: (drink: CocktailDB.Drink) => boolean;
-  isFavorite: (drink: CocktailDB.Drink) => boolean;
+  toggleFavorite: (drink: Drink) => boolean;
+  isFavorite: (drink: Drink) => boolean;
 }
 
 const defaultGlobalContext: GlobalState = {
@@ -23,8 +23,8 @@ export const GlobalStateContext = createContext<GlobalState>(defaultGlobalContex
 
 export function GlobalStateProvider ( {children}: {children: ReactNode}) {
   const [favorites, setFavorites] = useState<Map<string, DrinkFavorite>>(new Map<string, DrinkFavorite>());
-  
-  function toggleFavorite(drink: CocktailDB.Drink){
+
+  function toggleFavorite(drink: Drink){
     if(favorites.has(drink.id)){
       setFavorites((oldFavorites) => {
         oldFavorites.delete(drink.id);
@@ -41,7 +41,7 @@ export function GlobalStateProvider ( {children}: {children: ReactNode}) {
     }
   }
 
-  function isFavorite(drink: CocktailDB.Drink){
+  function isFavorite(drink: Drink){
     return favorites.has(drink.id);
   }
 

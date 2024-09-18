@@ -1,7 +1,7 @@
 import CocktailCard from "./CocktailCard"
-import * as CocktailDB from "../data/TheCocktailDB"
+import { Drink } from "../data/Drink"
 
-export default function CocktailCardList({cocktails}:{ cocktails: CocktailDB.Drink[]}) {
+export default function CocktailCardList({cocktails}:{ cocktails: Drink[]}) {
   return (
     <div className='cocktail-card-list'>
       {

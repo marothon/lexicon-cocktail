@@ -2,24 +2,25 @@ import { ReactElement, useEffect, useState } from "react";
 import * as CocktailDB from "../data/TheCocktailDB.ts";
 import { Link, useLoaderData } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton.tsx";
+import { Drink } from "../data/Drink.ts";
 
 export async function loaderLandingPage(){
-  let aRandomDrink: CocktailDB.Drink = await CocktailDB.random();
+  let aRandomDrink: Drink = await CocktailDB.random();
   return aRandomDrink;
 }
 
 export default function LandingPage(): ReactElement {
-  const randomDrink: CocktailDB.Drink = useLoaderData() as CocktailDB.Drink;
-  const [drink, setDrink] = useState<CocktailDB.Drink>(randomDrink);
+  const randomDrink: Drink = useLoaderData() as Drink;
+  const [drink, setDrink] = useState<Drink>(randomDrink);
   useEffect(() => {
     getRandom();
   }, [])
 
   async function getRandom() {
-    let aRandomDrink: CocktailDB.Drink = await CocktailDB.random();
+    let aRandomDrink: Drink = await CocktailDB.random();
     setDrink(aRandomDrink);
   }
-  
+
   return (
     <>
       <section id="randomCocktailCard">
@@ -31,9 +32,9 @@ export default function LandingPage(): ReactElement {
           <p>{drink?.drink}</p>
 
           <aside className='favoriteButtonContainer'>
-            <FavoriteButton key={drink.id} drink={drink as CocktailDB.Drink}/>
+            <FavoriteButton key={drink.id} drink={drink as Drink}/>
           </aside>
-          
+
           <Link to={""} className="moreButtonContainer">
             <span className="material-symbols-outlined">info</span>
             More

@@ -1,8 +1,6 @@
 import { Drink, DrinkIngredient } from "./Drink";
 import { Ingredient } from "./Ingredient";
 
-export type {Drink, Ingredient};
-
 const THE_COCKTAIL_DB_API_BASE_URL: string = "https://www.thecocktaildb.com/api/json/v1/1/";
 
 

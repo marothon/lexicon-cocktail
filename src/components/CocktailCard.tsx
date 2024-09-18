@@ -1,7 +1,7 @@
-import * as CocktailDB from '../data/TheCocktailDB'
+import { Drink } from '../data/Drink'
 import FavoriteButton from './FavoriteButton'
 
-export default function CocktailCard({drink}: {drink: CocktailDB.Drink}) {
+export default function CocktailCard({drink}: {drink: Drink}) {
   return (
     <article className='cocktail-card'>
       <img src={drink.drinkThumb as string}/>
