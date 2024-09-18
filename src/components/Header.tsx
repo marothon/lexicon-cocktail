@@ -29,7 +29,7 @@ export default function Header() {
             </NavLink>
 
             <NavLink
-              to="favorites"
+              to="favorites?p=1"
               className={({ isActive }) =>
                 [
                   isActive ? "active" : ""
