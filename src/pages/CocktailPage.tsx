@@ -20,11 +20,11 @@ export default function CocktailPage() {
             <h1>{drink.drink}</h1>
             <div className="tags">
               {[
-                <div className="tag alcoholic">{drink.alcoholic}</div>,
-                <div className="tag category">{drink.category}</div>,
+                <div key={drink.alcoholic} className="tag alcoholic">{drink.alcoholic}</div>,
+                <div key={drink.category} className="tag category">{drink.category}</div>,
                 drink.tags?.map((tag:string) => 
                   (
-                    <div className="tag">{tag}</div>
+                    <div key={tag} className="tag">{tag}</div>
                   )).flat()
               ]}
             </div>
@@ -41,7 +41,7 @@ export default function CocktailPage() {
             {
               drink.ingredients?.map((i: DrinkIngredient) => 
                 (
-                  <li>{i.measure} {i.ingredient}</li>
+                  <li key={i.ingredient}>{i.measure} {i.ingredient}</li>
                 )
               )
             }
