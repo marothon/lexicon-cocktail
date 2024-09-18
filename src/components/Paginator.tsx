@@ -1,5 +1,5 @@
-import { MouseEventHandler, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom';
+import { MouseEventHandler, useEffect, useState } from 'react'
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 interface PaginatorProps{
   pageParams?: URLSearchParams;
@@ -9,8 +9,12 @@ interface PaginatorProps{
 
 export default function Paginator({pageParams, pageCount, handlePagination}: PaginatorProps) {
   const [searchParams, _] = useSearchParams();
+  const location = useLocation();
   const [page, setPage] = useState<number>(parseInt(searchParams.get('p') as string) ?? 1);
   
+  useEffect(()=>{
+    setPage(parseInt(searchParams.get('p') as string) ?? 1)
+  }, [location]);
 
   const onClickHandler = (pageChange: number): MouseEventHandler<HTMLAnchorElement> => {
     return (e) => { 
