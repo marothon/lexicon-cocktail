@@ -1,0 +1,111 @@
+#root main:has(.cocktail-page){
+  width: 100%;
+  max-width: none;
+}
+
+.cocktail-page {
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  font-family: "Roboto Condensed", sans-serif;
+  background: rgba(0, 0, 0, 0.8);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  & img {
+    object-position: -5rem;
+    height: 100%;
+  }
+
+  & .details-container {
+    display: grid;
+
+    & .favorite-button-container {
+      grid-row: 1;
+      grid-column: 1;
+      font-size: 4rem;
+      margin: 1rem 1rem auto auto;
+    }
+
+    & .details {
+      grid-row: 1;
+      grid-column: 1;
+      padding: 2rem;
+
+      & > .header {
+        h1 {
+          font-size: 2.5rem;
+          font-weight: 400;
+          margin-bottom: 0.5rem;
+          padding-right: 1rem;
+        }
+
+        & h3 {
+          margin-top: 0.25rem;
+        }
+
+        & .tags {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          & .tag {
+            cursor: pointer;
+            padding: 0.5rem;
+            border: 0.1rem solid white;
+            border-radius: 0.25rem;
+
+            &:hover {
+              color: black;
+              background-color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1070px) {
+  .cocktail-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+
+    & img {
+      object-position: initial;
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      height: initial;
+      aspect-ratio: 1/1;
+    }
+
+    & .details-container {
+      display: grid;
+  
+      & .favorite-button-container {
+        grid-row: 1;
+        grid-column: 1;
+        font-size: 4rem;
+        margin: 2rem 2rem auto auto;
+      }
+
+      & .details {
+        padding: 2rem;
+    
+        & > .header { 
+          
+          h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+}

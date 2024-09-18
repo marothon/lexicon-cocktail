@@ -56,29 +56,34 @@ footer {
   }
   
 
+  & a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    transition: transform 0.5s;
+    font-size: 25px;
+  }
+
+  & a:hover {
+    transform: scale(1.2);
+  }
+
+  & a.active {
+    font-size: 30px;
+    font-weight: 900;
+  }
 
 }
 
 a {
-  color: rgb(255, 255, 255);
+  color: white;
   text-decoration: none;
   font-family: "Roboto Condensed", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  transition: transform 0.5s;
-  font-size: 25px;
 }
 
-
-a:hover {
-  transform: scale(1.2);
-}
-
-a.active {
-  font-size: 30px;
-  font-weight: 900;
-}
 
 h1 {
   font-family: "Roboto", sans-serif;
