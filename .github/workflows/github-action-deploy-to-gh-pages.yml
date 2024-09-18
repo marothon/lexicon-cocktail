@@ -1,0 +1,24 @@
+name: Build and Deploy React app from main to GitHub Pages gh-pages branch
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build -- --base=/lexicon-cocktail/
+    - name: Deploy React app to GitHub Pages
+      uses: angelstam/github-push-to-gh-pages@v1

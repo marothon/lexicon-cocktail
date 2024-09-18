@@ -16,4 +16,4 @@ export const routing = createBrowserRouter(createRoutesFromElements(
     <Route path="*" element={<PageNotFoundPage />} />
     <Route path='ingredient/:name' element={<IngredientPage/>} loader={ingredientPageLoader}/>
   </Route>
-));
+), import.meta.env.BASE_URL ? {basename: import.meta.env.BASE_URL} : undefined);
