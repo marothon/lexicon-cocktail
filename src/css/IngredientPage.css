@@ -1,0 +1,92 @@
+.ingredient-page {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr;
+  grid-template-rows: 1fr;
+
+  font-family: "Roboto Condensed", sans-serif;
+  background: rgba(0, 0, 0, 0.5);
+
+  & > .ingredient-thumbnail-container {
+    & > img {
+      margin: 1rem auto;
+        width: 25rem;
+    }
+  }
+
+  & .ingredient-info-container {
+    & > h1 {
+      font-family: "Roboto", sans-serif;
+      font-size: 3rem;
+    }
+
+    & > .ingredient-description{
+      white-space: pre-wrap;
+      padding: 0 2rem 2rem 0;
+      height: 20rem;
+
+      overflow: scroll;
+      scrollbar-color: white white;
+      scrollbar-width: thin;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+
+      &::after{
+        display: block;
+        content:'';
+        height: 5rem;
+      }
+    }
+  }
+
+  & > .used-in-cocktails-container {
+    grid-column: span 2;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+
+    text-align: center;
+
+    & > .cocktail-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1070px) {
+  main:has(.ingredient-page){
+    margin: 0;
+  }
+
+  .ingredient-page {
+    display: block;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+
+    & > .ingredient-thumbnail-container {
+      display: flex;
+      place-content: center;
+    }
+
+    & .ingredient-info-container {
+      & > h1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 3rem;
+      }
+  
+      & > .ingredient-description{
+        white-space: pre-wrap;
+        text-align: justify;
+        padding: 0 2rem 2rem 0;
+        height: 20rem;
+        height: initial;
+        overflow: initial;
+        mask-image: none;
+  
+        &::after{
+          display: none;
+        }
+      }
+    }
+  }
+}
