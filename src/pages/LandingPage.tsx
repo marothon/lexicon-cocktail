@@ -36,7 +36,6 @@ export default function LandingPage(): ReactElement {
             <span className="material-symbols-outlined">info</span>
             More
           </Link>
-
         </section>
       </section>
 
