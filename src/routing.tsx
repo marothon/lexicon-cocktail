@@ -12,4 +12,4 @@ export const routing = createBrowserRouter(createRoutesFromElements(
     <Route path='cocktail/:id' element={<CocktailPage/>} loader={cocktailPageLoader}/>
     <Route path="favorites" element={<FavoritesPage />} />
   </Route>
-));
+), {basename: "/lexicon-cocktail/"});
