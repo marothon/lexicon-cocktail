@@ -48,6 +48,15 @@ export async function lookupIngredient(id: string) : Promise<Ingredient> {
     );
 }
 
+export async function filterByIngredient(ingredientName: string) : Promise<Drink[]> {
+    return requestEndpoint<Drink[]>(
+        'filter.php',
+        data => data.drinks,
+        data => data.drinks.map(d => transformToDrink(d)),
+        [{key: 'i', value: ingredientName}]
+    );
+}
+
 async function requestEndpoint<T>(endpointUri: string, test: (data: any) => boolean, transform: (data: any) => T,
     parameters: Array<{key: string, value: string}> = []): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
