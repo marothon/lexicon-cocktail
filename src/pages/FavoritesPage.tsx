@@ -27,9 +27,12 @@ export default function FavoritesPage(): ReactNode {
     let queryParameters = new URLSearchParams(window.location.search);
     let pageNumber = Number(queryParameters.get('p'));
     if (favorites.length % 10 == 0 && favorites.length >= 10) {
-      setPageCount(pageNumber--);
-      setSearchParams({ p : pageNumber.toString() });
+      if(pageNumber > 1){
+        setPageCount(pageNumber--);
+        setSearchParams({ p : pageNumber.toString() });
+      }
     }
+    
     handlePagination(pageNumber);
     
   }, [favorites])
