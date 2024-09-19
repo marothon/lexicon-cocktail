@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import * as CocktailDB from "../data/TheCocktailDB.ts";
 import { Link, useLoaderData } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton.tsx";

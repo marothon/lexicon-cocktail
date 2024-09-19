@@ -1,19 +1,19 @@
 import { ReactNode, useContext, useEffect, useState } from "react";
 import { GlobalStateContext } from "../context/GlobalStateContext.tsx";
 import CocktailCardList from "../components/CocktailCardList.tsx";
-import * as CocktailDB from "../data/TheCocktailDB.ts";
+import { Drink } from "../data/Drink.ts";
 import Paginator from "../components/Paginator.tsx";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function FavoritesPage(): ReactNode {
   let { favorites } = useContext(GlobalStateContext);
   const [pageCount, setPageCount] = useState<number>(1);
-  const [pagedFavorites, setPagedFavorites] = useState<CocktailDB.Drink[]>([]);
+  const [pagedFavorites, setPagedFavorites] = useState<Drink[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePagination = (page: number) => {
     setPageCount(Math.ceil(favorites.length / 10));
-    let favoriteDrinks = favorites.map(d => d as CocktailDB.Drink)
+    let favoriteDrinks = favorites.map(d => d as Drink)
     setPagedFavorites(favoriteDrinks.slice((page - 1) * 10, page * 10));
 
   };
@@ -26,17 +26,21 @@ export default function FavoritesPage(): ReactNode {
     
     let queryParameters = new URLSearchParams(window.location.search);
     let pageNumber = Number(queryParameters.get('p'));
-    
-    if (favorites.length % 10 == 0) {
+    if (favorites.length % 10 == 0 && favorites.length >= 10) {
       setPageCount(pageNumber--);
       setSearchParams({ p : pageNumber.toString() });
     }
     handlePagination(pageNumber);
     
   }, [favorites])
+
+  let location = useLocation();
+  useEffect(() => {
+    const p = new URLSearchParams(location.search).get('p');
+    handlePagination(Number(p));
+    
+  }, [location]);
   
-
-
   return (
     <div className="favorite-page">
       {pagedFavorites.length > 0 ?
