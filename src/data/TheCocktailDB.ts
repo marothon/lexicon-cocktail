@@ -52,7 +52,7 @@ export async function filterByIngredient(ingredientName: string) : Promise<Drink
     return requestEndpoint<Drink[]>(
         'filter.php',
         data => data.drinks,
-        data => data.drinks.map(d => transformToDrink(d)),
+        data => data.drinks.map((d: any) => transformToDrink(d)),
         [{key: 'i', value: ingredientName}]
     );
 }

@@ -7,18 +7,14 @@
   display: grid;
   width: 100%;
   max-width: 1200px;
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-between;
   
   font-family: "Roboto Condensed", sans-serif;
   background: rgba(0, 0, 0, 0.8);
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
 
-  & img {
-    object-position: -5rem;
-    height: 100%;
+  & > img {
+    align-self: center;
   }
 
   & .details-container {
@@ -64,6 +60,12 @@
             }
           }
         }
+      }
+
+      & .ingredients {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
       }
     }
   }
