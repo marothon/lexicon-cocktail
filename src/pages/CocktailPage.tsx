@@ -3,6 +3,7 @@ import { LoaderFunction, useLoaderData } from "react-router-dom"
 import * as CocktailDB from "../data/TheCocktailDB";
 import FavoriteButton from "../components/FavoriteButton";
 import { Drink, DrinkIngredient } from "../data/Drink";
+import IngredientCard from "../components/IngredientCard";
 
 export const cocktailPageLoader: LoaderFunction = async ({params}) => {
   return await CocktailDB.lookupDrink(params.id as string);
@@ -37,17 +38,14 @@ export default function CocktailPage() {
             ''
           }
           <h3>Ingredients</h3>
-          <ul className="ingredients">
+          <section className="ingredients">
             {
               drink.ingredients?.map((i: DrinkIngredient) => 
                 (
-                  <li key={i.ingredient}>{i.measure} {i.ingredient}</li>
+                  <IngredientCard key={i.ingredient+i.measure} ingredient={i} />
                 )
               )
             }
-          </ul>
-          <section>
-          
           </section>
         </section>
         <aside className="favorite-button-container">
