@@ -9,7 +9,7 @@ export default function FavoritesPage(): ReactNode {
   let { favorites } = useContext(GlobalStateContext);
   const [pageCount, setPageCount] = useState<number>(1);
   const [pagedFavorites, setPagedFavorites] = useState<Drink[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
 
   const handlePagination = (page: number) => {
     setPageCount(Math.ceil(favorites.length / 10));
@@ -23,7 +23,7 @@ export default function FavoritesPage(): ReactNode {
   }, [])
 
   useEffect(() => {
-    
+
     let queryParameters = new URLSearchParams(window.location.search);
     let pageNumber = Number(queryParameters.get('p'));
     if (favorites.length % 10 == 0 && favorites.length >= 10) {
@@ -32,18 +32,18 @@ export default function FavoritesPage(): ReactNode {
         setSearchParams({ p : pageNumber.toString() });
       }
     }
-    
+
     handlePagination(pageNumber);
-    
+
   }, [favorites])
 
   let location = useLocation();
   useEffect(() => {
     const p = new URLSearchParams(location.search).get('p');
     handlePagination(Number(p));
-    
+
   }, [location]);
-  
+
   return (
     <div className="favorite-page">
       {pagedFavorites.length > 0 ?
