@@ -62,6 +62,46 @@ export async function filterByIngredient(ingredientName: string) : Promise<Drink
     );
 }
 
+export async function allIngredients() : Promise<string[]> {
+    return requestEndpoint<string[]>(
+        'list.php',
+        data => data.drinks,
+        data => data.drinks.map((d: any) => d.strIngredient1),
+        [{key: 'i', value: 'list'}],
+        true
+    );
+}
+
+export async function allCategories() : Promise<string[]> {
+    return requestEndpoint<string[]>(
+        'list.php',
+        data => data.drinks,
+        data => data.drinks.map((d: any) => d.strCategory),
+        [{key: 'c', value: 'list'}],
+        true
+    );
+}
+
+export async function allGlasses() : Promise<string[]> {
+    return requestEndpoint<string[]>(
+        'list.php',
+        data => data.drinks,
+        data => data.drinks.map((d: any) => d.strGlass),
+        [{key: 'g', value: 'list'}],
+        true
+    );
+}
+
+export async function allAlcoholTypes() : Promise<string[]> {
+    return requestEndpoint<string[]>(
+        'list.php',
+        data => data.drinks,
+        data => data.drinks.map((d: any) => d.strAlcoholic),
+        [{key: 'a', value: 'list'}],
+        true
+    );
+}
+
 async function requestEndpoint<T>(endpointUri: string, test: (data: any) => boolean, transform: (data: any) => T,
     parameters: Array<{key: string, value: string}> = [], useCache: boolean = false): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
