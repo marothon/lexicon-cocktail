@@ -1,5 +1,6 @@
 import { Drink, DrinkIngredient } from "./Drink";
 import { Ingredient } from "./Ingredient";
+import * as Cache from "./Cache";
 
 const THE_COCKTAIL_DB_API_BASE_URL: string = "https://www.thecocktaildb.com/api/json/v1/1/";
 
@@ -26,7 +27,8 @@ export async function searchIngredient(query: string) : Promise<Ingredient> {
         "search.php",
         data => data.ingredients[0],
         data => transformToIngredient(data.ingredients[0]),
-        [{key: "i", value: query}]
+        [{key: "i", value: query}],
+        true
     );
 }
 
@@ -35,7 +37,8 @@ export async function lookupDrink(id: string) : Promise<Drink> {
         "lookup.php",
         data => data.drinks[0],
         data => transformToDrink(data.drinks[0]),
-        [{key: "i", value: id}]
+        [{key: "i", value: id}],
+        true
     );
 }
 
@@ -44,7 +47,8 @@ export async function lookupIngredient(id: string) : Promise<Ingredient> {
         "lookup.php",
         data => data.ingredients[0],
         data => transformToIngredient(data.ingredients[0]),
-        [{key: "iid", value: id}]
+        [{key: "iid", value: id}],
+        true
     );
 }
 
@@ -53,12 +57,13 @@ export async function filterByIngredient(ingredientName: string) : Promise<Drink
         'filter.php',
         data => data.drinks,
         data => data.drinks.map((d: any) => transformToDrink(d)),
-        [{key: 'i', value: ingredientName}]
+        [{key: 'i', value: ingredientName}],
+        true
     );
 }
 
 async function requestEndpoint<T>(endpointUri: string, test: (data: any) => boolean, transform: (data: any) => T,
-    parameters: Array<{key: string, value: string}> = []): Promise<T> {
+    parameters: Array<{key: string, value: string}> = [], useCache: boolean = false): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
         try {
             let paramString: string = "";
@@ -68,12 +73,23 @@ async function requestEndpoint<T>(endpointUri: string, test: (data: any) => bool
                     ).join();
             }
 
-            const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + endpointUri + paramString);
-            if (!response.ok) {
-                console.log("Network response was not ok");
-                reject("Network response was not ok.");
+            let cacheId = endpointUri + paramString;
+            let data;
+
+            if (useCache && Cache.exists(cacheId)) {
+                data = Cache.retrieve(cacheId);
+            } else {
+                const response = await fetch(THE_COCKTAIL_DB_API_BASE_URL + endpointUri + paramString);
+                if (!response.ok) {
+                    console.log("Network response was not ok");
+                    reject("Network response was not ok.");
+                }
+                data = await response.json();
+
+                if (useCache) {
+                    Cache.store(cacheId, data);
+                }
             }
-            const data = await response.json();
 
             if (test(data)) {
                 resolve(transform(data));
