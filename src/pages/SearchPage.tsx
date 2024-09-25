@@ -12,10 +12,11 @@ export default function SearchPage() {
   const [pageCount, setPageCount] = useState<number>(1);
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
+  const pageSize: number = 10;
 
   const displaySearchResult = (result: Drink[], page: number) => {
-    setPageCount(Math.ceil(result.length/10));
-    setPagedSearchResult(result.slice( (page-1)*10, page*10));
+    setPageCount(Math.ceil(result.length/pageSize));
+    setPagedSearchResult(result.slice( (page-1)*pageSize, page*pageSize));
   }
 
   const handlePagination = (page: number) => {
@@ -24,9 +25,13 @@ export default function SearchPage() {
 
   const handleOnSearch = ({drinks, searchTerm}: CocktailSearchResult) => {
     if(searchTerm){
-      navigate(`?p=${searchParams.get('p')}&q=${searchTerm}`);
+      let page: number = searchTerm != searchedTerm ? 1 : parseInt(searchParams.get('p') as string) || 1;
+      while(page > Math.ceil(drinks.length/pageSize)){
+        page--;
+      }
+      navigate(`?p=${page}&q=${searchTerm}`);
       setSearchedTerm(searchTerm as string);
-      displaySearchResult(drinks, parseInt(searchParams.get('p') as string) || 1);
+      displaySearchResult(drinks, page);
       searchResult.current = drinks;
     } else {
       navigate('');
@@ -45,7 +50,7 @@ export default function SearchPage() {
     <div className='search-page'>
       <CocktailSearchForm onSearch={handleOnSearch} defaultSearchTerm={searchParams.get('q') ?? ''}/>
       { // Only show paginator if we have a search result to show
-        searchResult.current ?
+        searchResult.current && searchResult.current.length > 0 ?
         <Paginator
           pageCount={pageCount}
           pageParams={pageParams}
