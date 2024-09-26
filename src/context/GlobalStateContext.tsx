@@ -5,6 +5,7 @@ interface DrinkFavorite {
   id: string;
   drink: string;
   drinkThumb: string;
+  alcoholic: string;
 }
 
 interface GlobalState {
@@ -34,7 +35,13 @@ export function GlobalStateProvider ( {children}: {children: ReactNode}) {
     }
     else{
       setFavorites((oldFavorites) => {
-        oldFavorites.set(drink.id, {id: drink.id, drink: drink.drink, drinkThumb: drink.drinkThumb});
+        let newFavoriteDrink = {
+          id: drink.id, 
+          drink: drink.drink,
+          drinkThumb: drink.drinkThumb,
+          alcoholic: drink.alcoholic
+        }
+        oldFavorites.set(drink.id, newFavoriteDrink);
         return structuredClone(oldFavorites);
       });
       return true;
