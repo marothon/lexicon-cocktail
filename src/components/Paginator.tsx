@@ -13,7 +13,9 @@ export default function Paginator({pageParams, pageCount, handlePagination}: Pag
   const [page, setPage] = useState<number>(parseInt(searchParams.get('p') as string) || 1);
   
   useEffect(()=>{
-    setPage(parseInt(searchParams.get('p') as string) || 1)
+    const page = parseInt(searchParams.get('p') as string) || 1;
+    setPage(page);
+    handlePagination(page)
   }, [location]);
 
   const onClickHandler = (pageChange: number): MouseEventHandler<HTMLAnchorElement> => {
