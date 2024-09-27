@@ -1,4 +1,4 @@
-import { LoaderFunction, useLoaderData, useSearchParams } from "react-router-dom";
+import { LoaderFunction, Navigate, useLoaderData, useSearchParams } from "react-router-dom";
 import * as CocktailDB from '../data/TheCocktailDB';
 import { Ingredient } from "../data/Ingredient";
 import { Drink } from "../data/Drink";
@@ -7,16 +7,28 @@ import { useEffect, useState } from "react";
 import Paginator from "../components/Paginator";
 
 export const ingredientPageLoader: LoaderFunction = async ({params}) => {
-  let ingredient = await CocktailDB.searchIngredient(params.name as string);
-  let drinks = await CocktailDB.filterByIngredient(params.name as string);
-  return {
-    ingredient: ingredient, 
-    drinks: drinks
-  };
+  try {
+    let ingredient = await CocktailDB.searchIngredient(params.name as string);
+    let drinks = await CocktailDB.filterByIngredient(params.name as string);
+    return {
+      ingredient: ingredient, 
+      drinks: drinks
+    };
+  } catch {
+    // No such ingredient,  return null
+    return null;
+  }
 }
 
 export default function IngredientPage() {
-  const {ingredient, drinks} = useLoaderData() as {ingredient: Ingredient, drinks: Drink[]};
+  const data = useLoaderData() as {ingredient: Ingredient, drinks: Drink[]};
+  
+  // If we didn't get any ingredient data, assume it doesn't exist and redirect to 404
+  if(!data){
+    return <Navigate to='/404' />
+  }
+
+  const {ingredient, drinks} = data;
   const [displayedCocktails, setDisplayedCocktails] = useState<Drink[]>(drinks.slice(0, 5));
   const [searchParams, _ ] = useSearchParams();
   const BASE_IMAGE_URL: string = 'http://www.thecocktaildb.com/images/ingredients';

@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from "react-router-dom";
 import App  from "./components/App";
 import LandingPage, { loaderLandingPage } from "./pages/LandingPage";
 import SearchPage from "./pages/SearchPage";
@@ -13,7 +13,8 @@ export const routing = createBrowserRouter(createRoutesFromElements(
     <Route path='search' element={<SearchPage/>} />
     <Route path='cocktail/:id' element={<CocktailPage/>} loader={cocktailPageLoader}/>
     <Route path="favorites" element={<FavoritesPage />} />
-    <Route path="*" element={<PageNotFoundPage />} />
     <Route path='ingredient/:name' element={<IngredientPage/>} loader={ingredientPageLoader}/>
+    <Route path='404' element={<PageNotFoundPage />} />
+    <Route path="*" element={<Navigate to='404' />} />
   </Route>
 ), import.meta.env.BASE_URL ? {basename: import.meta.env.BASE_URL} : undefined);
