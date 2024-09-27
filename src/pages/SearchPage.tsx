@@ -60,10 +60,13 @@ export default function SearchPage() {
         null
       }
       {
-        pagedSearchResult ?
+        pagedSearchResult && pagedSearchResult.length > 0?
           <CocktailCardList cocktails={pagedSearchResult} />
           :
-          null
+          searchResult.current && pagedSearchResult?.length  == 0 ?
+            <h1>No drinks found!</h1>
+            :
+            null
       }
     </div>
   )

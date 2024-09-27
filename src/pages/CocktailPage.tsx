@@ -1,16 +1,25 @@
-import { useState } from "react";
-import { LoaderFunction, useLoaderData } from "react-router-dom"
+import { LoaderFunction, Navigate, useLoaderData } from "react-router-dom"
 import * as CocktailDB from "../data/TheCocktailDB";
 import FavoriteButton from "../components/FavoriteButton";
 import { Drink, DrinkIngredient } from "../data/Drink";
 import IngredientCard from "../components/IngredientCard";
 
 export const cocktailPageLoader: LoaderFunction = async ({params}) => {
-  return await CocktailDB.lookupDrink(params.id as string);
+  try{
+    return await CocktailDB.lookupDrink(params.id as string);
+  } catch {
+    // No such cocktail, return empty
+    return null;
+  }
 }
 
 export default function CocktailPage() {
-  const [drink, _] = useState(useLoaderData() as Drink);
+  const drink = useLoaderData() as Drink;
+  
+  // If we didn't get any drink data, assume it doesn't exist and redirect to 404
+  if(!drink){
+    return <Navigate to='/404' />;
+  }
 
   return (
     <section className="cocktail-page">

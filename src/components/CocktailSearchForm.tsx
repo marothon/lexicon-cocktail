@@ -26,7 +26,12 @@ export default function CocktailSearchForm({onSearch, defaultSearchTerm}: Cockta
   const searchResult = useRef<{searchTerm: string, drinks: Drink[]}>();
 
   const performSearch = async (searchTerm: string) => {
-    return await CocktailDB.search(searchTerm);
+    try {
+      return await CocktailDB.search(searchTerm);
+    } catch {
+      // No drinks found, return an empty array
+      return [];
+    }
   };
 
   const filterSearch = (result: Drink[]) => {
