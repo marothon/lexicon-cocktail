@@ -18,13 +18,13 @@ export function FavoritePieChart({ data }: FavoritePieChartProps) {
   });
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={300}>
       <PieChart>
         <Pie
           dataKey="numberOfDrinks"
           startAngle={180} endAngle={0}
           data={dataWithLabels}
-          cx="50%" cy="90%" outerRadius="130%"
+          cx="50%" cy="100%" outerRadius="170%"
         >
 
           <LabelList

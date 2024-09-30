@@ -20,7 +20,7 @@ export default function FavoritesPage(): ReactNode {
   ];
   const [data, setData] = useState<DrinkStatistics[]>(initialDataArray);
   const [_, setSearchParams] = useSearchParams();
-  const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 900px)' });
   const handlePagination = (page: number) => {
     setPageCount(Math.ceil(favorites.length / 10));
     let favoriteDrinks = favorites.map(d => d as Drink)

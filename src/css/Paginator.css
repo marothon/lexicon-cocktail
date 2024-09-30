@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
 
   & span.current-page{
     margin-left: 0.5rem;
