@@ -11,8 +11,7 @@ body {
   background-position: 70%;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #8a6c0b;
-  
+  background-color: #000000;
 }
 
 #root {
@@ -23,13 +22,10 @@ body {
 
   & main {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
     flex: 1;
     max-width: 1000px;
     width: 100%;
-    padding: 0 1rem;
   }
 }
 
@@ -116,12 +112,7 @@ h1 {
 }
 
 @media screen and (max-width: 600px) {
-  main {
-    margin: 2rem 0;
-    gap: 3rem;
-    width: 100%;
-  }
-
+  
   header {
     & div.headerContainer.desktop {
       display: none;
@@ -149,5 +140,4 @@ h1 {
     }
     
   }
-
 }

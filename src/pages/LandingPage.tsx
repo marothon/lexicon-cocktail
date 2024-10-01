@@ -19,7 +19,7 @@ export default function LandingPage(): ReactElement {
   }
 
   return (
-    <>
+    <div className="landing-page">
       <section id="randomCocktailCard">
         <figure id="randomCocktailCard-leftSide">
           <img src={drink?.drinkThumb} />
@@ -40,6 +40,6 @@ export default function LandingPage(): ReactElement {
       </section>
 
       <Link to={"/"} onClick={getRandom} className="surpriseMeButton">Surprise me</Link>
-    </>
+    </div>
   )
 }

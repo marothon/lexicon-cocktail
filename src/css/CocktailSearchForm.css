@@ -1,11 +1,20 @@
 .cocktail-search-form {
+  gap: 0.5rem;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+
   & .search-bar-container {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    padding: 0.5rem;
+    
 
     input[type='text'] {
+      height: 1.5rem;    
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      width: 100%;
       font-family: "Roboto Condensed", sans-serif;
     }
   }
@@ -31,5 +40,16 @@
     &:hover {
       color: rgb(186, 186, 186);
     }
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .cocktail-search-form {
+    padding: 0 1rem;
+  }
+
+  .filter-settings-container {
+    flex-direction: column;
   }
 }
